@@ -1,26 +1,183 @@
+/* ─── @imports MUST come first ──────────────────────────────────────── */
+/* NOTE: Google Fonts are loaded via next/font in layout.tsx.
+   This eliminates the render-blocking cross-origin font fetch that
+   costs ~200-400ms on FCP. next/font downloads fonts at build time
+   and injects them inline — no runtime network request needed here. */
 @import "tailwindcss";
 
+
+/* ─── Design Tokens ────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --color-surface-0: #020408;
+  --color-surface-1: #0c1018;
+  --color-surface-2: #131821;
+
+  /* Text */
+  --color-primary: #f0f4ff;
+  --color-muted: #8892a4;
+
+  /* Accent — indigo/violet */
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f52d9;
+  --color-accent-subtle: #6366f130;
+
+  /* Border */
+  --color-border: #1e2535;
+
+  /* Easing */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ─── Base Reset ────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-surface-0);
+    color: var(--color-primary);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface-0);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-subtle);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Utility Layer ─────────────────────────────────────────────────── */
+@layer utilities {
+  /* Surfaces */
+  .bg-surface-0 { background-color: var(--color-surface-0); }
+  .bg-surface-1 { background-color: var(--color-surface-1); }
+  .bg-surface-2 { background-color: var(--color-surface-2); }
+
+  /* Text */
+  .text-primary { color: var(--color-primary); }
+  .text-muted   { color: var(--color-muted); }
+
+  /* Accent */
+  .bg-accent         { background-color: var(--color-accent); }
+  .bg-accent-hover   { background-color: var(--color-accent-hover); }
+  .bg-accent-subtle  { background-color: var(--color-accent-subtle); }
+  .text-accent       { color: var(--color-accent); }
+  .border-accent     { border-color: var(--color-accent); }
+  .border-border     { border-color: var(--color-border); }
+
+  /* Glow shadows */
+  .shadow-glow    { box-shadow: 0 0 20px 0 #6366f140; }
+  .shadow-glow-lg { box-shadow: 0 0 40px 0 #6366f160; }
+
+  /* Animations */
+  .animate-spin-slow    { animation: spin 8s linear infinite; }
+  .animate-spin-reverse { animation: spin 5s linear infinite reverse; }
+  .animate-pulse-glow   { animation: pulse-glow 2s ease-in-out infinite; }
 }
+
+/* ─── Keyframes ─────────────────────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; transform: scale(0.95); }
+  50%       { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* ─── Noise texture overlay ─────────────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("/noise.svg");
+  background-size: 256px 256px;
+}
+
+/* ─── WebGL CSS Fallback ─────────────────────────────────────────────
+   When <html class="no-webgl"> is set by the ErrorBoundary or by
+   JavaScript detecting missing WebGL support, apply a CSS gradient
+   background directly on the body to maintain visual polish.
+   This keeps FCP/CLS clean when the Canvas never mounts.
+   ─────────────────────────────────────────────────────────────────── */
+html.no-webgl body {
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 30%, #6366f115 0%, transparent 60%),
+    radial-gradient(ellipse 70% 80% at 80% 70%, #a855f710 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, #6366f108 0%, transparent 50%);
+  background-color: #020408;
+}
+
+/* ─── Global Focus Ring ──────────────────────────────────────────────
+   Lighthouse Accessibility: ensure all interactive elements have a
+   visible focus indicator that passes AA contrast ratio.
+   ─────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────
+   Lighthouse Best Practices: respect prefers-reduced-motion.
+   Disable GSAP-independent CSS animations for users who prefer reduced
+   motion. GSAP itself also checks this — see gsap.matchMedia().
+   ─────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Print ──────────────────────────────────────────────────────────
+   Hide 3D canvas and decorative elements when printing.
+   ─────────────────────────────────────────────────────────────────── */
+@media print {
+  canvas,
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}
+
