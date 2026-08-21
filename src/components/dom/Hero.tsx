@@ -105,11 +105,6 @@ export function Hero() {
         </a>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted/40">
-        <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-muted/40 to-transparent animate-pulse" />
-      </div>
     </section>
   );
 }
