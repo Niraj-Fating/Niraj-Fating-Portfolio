@@ -8,7 +8,7 @@ export const siteConfig = {
   location: "India",
   socials: {
     github: "https://github.com/Niraj-Fating",
-    linkedin: "https://linkedin.com/in/nirajfating",
+    linkedin: "https://www.linkedin.com/in/niraj-fating-37abb12a8/",
     twitter: "https://twitter.com/nirajfating",
   },
 };
