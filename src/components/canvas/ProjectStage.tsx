@@ -130,8 +130,9 @@ interface ProjectStageProps {
 export function ProjectStage({ onSelectProject }: ProjectStageProps) {
   // Coordinates mapped in front of the project scroll keyframe
   const nodePositions: [number, number, number][] = [
-    [-2.2, -1.8, 1.2], // Spam Detection System
-    [ 2.2, -1.8, 1.2], // AI-Powered E-Newspaper
+    [-2.6, -1.2, 1.2], // Top left (Spam Detection)
+    [ 2.6, -1.8, 1.2], // Middle right (E-Newspaper)
+    [-2.2, -2.6, 1.2], // Bottom left (Waste Classification)
   ];
 
   return (
