@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { siteConfig, navLinks } from "@/data/portfolio";
 import { clsx } from "clsx";
 import { Download } from "lucide-react";
+import Image from "next/image";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,9 +28,14 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
-          <span className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white text-sm font-bold font-mono group-hover:scale-110 transition-transform">
-            NF
-          </span>
+          <div className="relative w-8 h-8 rounded-lg overflow-hidden group-hover:scale-110 transition-transform border border-border shadow-md">
+            <Image
+              src="/avatar.jpg"
+              alt="Niraj Fating Avatar"
+              fill
+              className="object-cover"
+            />
+          </div>
           <span className="font-semibold text-sm text-primary hidden sm:block">
             {siteConfig.name}
           </span>
