@@ -194,10 +194,22 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
         {/* Overview & Architecture Details */}
         <div className="space-y-6 mb-8 text-sm sm:text-base">
+          {/* Abstract is rendered as project.description in another component or not at all here?
+              Wait, currently the description isn't even rendered inside the modal! 
+              Let's add the abstract (description) at the top of this section before Methodology. */}
           <div>
-            <p className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-accent" /> System Architecture & Execution
+            <h3 className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              Abstract
+            </h3>
+            <p className="text-primary/90 leading-relaxed mb-6 text-sm sm:text-base">
+              {project.description}
             </p>
+          </div>
+
+          <div>
+            <h3 className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-accent" /> Methodology
+            </h3>
             <ul className="space-y-2.5 mt-3">
               {project.architectureDetails.map((detail, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-sm text-muted leading-relaxed">
@@ -212,9 +224,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           </div>
 
           <div>
-            <p className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-2">
-              Performance Benchmarks
-            </p>
+            <h3 className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-2">
+              Features & Key Highlights
+            </h3>
             <div className="grid sm:grid-cols-2 gap-3 mt-3">
               {project.keyHighlights.map((highlight, idx) => (
                 <div
@@ -227,6 +239,25 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
               ))}
             </div>
           </div>
+
+          {project.futureScope && project.futureScope.length > 0 && (
+            <div>
+              <h3 className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-accent" /> Future Scope
+              </h3>
+              <ul className="space-y-2.5 mt-3">
+                {project.futureScope.map((scope, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-sm text-muted leading-relaxed">
+                    <CheckCircle2
+                      className="w-4 h-4 shrink-0 mt-0.5"
+                      style={{ color: project.accentColor }}
+                    />
+                    <span>{scope}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Footer Actions */}

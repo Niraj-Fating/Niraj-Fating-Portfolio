@@ -13,6 +13,7 @@ export interface ResumeProject {
   github?: string;
   demo?: string;
   featured: boolean;
+  futureScope?: string[];
 }
 
 export interface ResumeExperience {
@@ -95,6 +96,36 @@ export const resumeData: ResumeData = {
       color: "#a855f7",
       accentColor: "#c084fc",
       github: "https://github.com/Niraj-Fating",
+      featured: true,
+    },
+    {
+      id: "waste-classification-cnn",
+      title: "Waste Classification Using Deep Learning",
+      tagline: "Automated Waste Segregation via CNN",
+      skills: ["Python", "TensorFlow", "Keras", "CNN", "Computer Vision", "NumPy"],
+      xyzMetric:
+        "Improved automated waste segregation by developing a Deep Learning CNN (TensorFlow/Keras) to classify waste images into Organic and Recyclable categories.",
+      description:
+        "An intelligent computer vision system aimed at addressing the global waste management crisis. By automating the classification of waste at the source, this deep learning model helps streamline recycling processes and reduce landfill contamination.",
+      architectureDetails: [
+        "Data Collection & Augmentation: Curated and preprocessed a balanced dataset of organic and recyclable waste images. Applied data augmentation (rotation, flipping, zooming) to improve model robustness.",
+        "Model Architecture: Designed and trained a Convolutional Neural Network (CNN) using TensorFlow and Keras to extract hierarchical spatial features from waste images.",
+        "Evaluation & Validation: Benchmarked model performance using categorical cross-entropy loss, achieving high validation accuracy on unseen test data."
+      ],
+      keyHighlights: [
+        "Image-Based Classification: Accurately distinguishes between Organic and Recyclable waste.",
+        "Fast Prediction Speed: Optimized CNN architecture for rapid inference suitable for edge deployment.",
+        "Robust Feature Extraction: Effectively handles variations in lighting, background, and object orientation."
+      ],
+      futureScope: [
+        "Mobile Application Integration: Deploying the model via a mobile app for user-facing, on-the-go waste classification.",
+        "Real-Time Smart Bins: Integrating the model with IoT camera modules in physical waste bins for automated sorting.",
+        "Cloud API Deployment: Serving the model via a scalable cloud backend for integration with municipal waste management systems."
+      ],
+      category: "ml",
+      color: "#10b981",
+      accentColor: "#34d399",
+      github: "https://github.com/Niraj-Fating/Waste-Classification-Using-Deep-Learning",
       featured: true,
     },
   ],
